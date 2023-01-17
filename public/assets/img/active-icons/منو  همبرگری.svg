@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.066" height="14.453" viewBox="0 0 18.066 14.453">
+  <g id="TabBar-Icons" transform="translate(0 -2)">
+    <g id="Hamburger-Round" transform="translate(0 2)">
+      <path id="Hamburger" d="M0,3.445A1.443,1.443,0,0,1,1.448,2h15.17a1.445,1.445,0,1,1,0,2.891H1.448A1.443,1.443,0,0,1,0,3.445ZM0,9.226A1.443,1.443,0,0,1,1.448,7.781h15.17a1.445,1.445,0,1,1,0,2.891H1.448A1.443,1.443,0,0,1,0,9.226Zm0,5.781a1.443,1.443,0,0,1,1.448-1.445h15.17a1.445,1.445,0,1,1,0,2.891H1.448A1.443,1.443,0,0,1,0,15.007Z" transform="translate(0 -2)" fill="#fff" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

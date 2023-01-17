@@ -1,0 +1,16 @@
+{
+  "name": "poolex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "hsn",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "redis": "^3.1.2",
+    "socket.io": "^4.2.0"
+  }
+}

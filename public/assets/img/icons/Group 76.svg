@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32.099" height="17.174" viewBox="0 0 32.099 17.174">
+  <g id="Group_76" data-name="Group 76" transform="translate(-1858.458 -371)">
+    <g id="Ellipse_255" data-name="Ellipse 255" transform="translate(1862 371)" fill="#979493" stroke="#979493" stroke-width="1">
+      <circle cx="3.5" cy="3.5" r="3.5" stroke="none"/>
+      <circle cx="3.5" cy="3.5" r="3" fill="none"/>
+    </g>
+    <g id="Ellipse_256" data-name="Ellipse 256" transform="translate(1880 371)" fill="#979493" stroke="#979493" stroke-width="1">
+      <circle cx="3.5" cy="3.5" r="3.5" stroke="none"/>
+      <circle cx="3.5" cy="3.5" r="3" fill="none"/>
+    </g>
+    <g id="Ellipse_257" data-name="Ellipse 257" transform="translate(1870 371)" fill="#979493" stroke="#979493" stroke-width="1">
+      <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
+      <circle cx="4.5" cy="4.5" r="4" fill="none"/>
+    </g>
+    <path id="Path_529" data-name="Path 529" d="M3665.958-293.549v-3.219a6.121,6.121,0,0,1,1.763-1.3,11.289,11.289,0,0,1,2.529-.766h5.365v1.533a4.64,4.64,0,0,0-2.3,1.15,7.455,7.455,0,0,0-1.456,2.606Z" transform="translate(-1807 679)" fill="#979493" stroke="#979493" stroke-width="1"/>
+    <path id="Path_530" data-name="Path 530" d="M3672.932-293.549a6.646,6.646,0,0,1,1.686-1.993,7.611,7.611,0,0,1,3.142-1.3h7.97a6.377,6.377,0,0,1,2.913,1.3,3.215,3.215,0,0,1,1.073,1.993v2.223h-16.784Z" transform="translate(-1807 679)" fill="#979493" stroke="#979493" stroke-width="1"/>
+    <path id="Path_531" data-name="Path 531" d="M3675.615-293.549v-3.219a6.121,6.121,0,0,0-1.763-1.3,11.289,11.289,0,0,0-2.529-.766h-5.365v1.533a4.64,4.64,0,0,1,2.3,1.15,7.455,7.455,0,0,1,1.456,2.606Z" transform="translate(-1785.558 679)" fill="#979493" stroke="#979493" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/poolex.iml" filepath="$PROJECT_DIR$/.idea/poolex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../poolex_web/.idea/poolex_web.iml" filepath="$PROJECT_DIR$/../poolex_web/.idea/poolex_web.iml" />
+    </modules>
+  </component>
+</project>

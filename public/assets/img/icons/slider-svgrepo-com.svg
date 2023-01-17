@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28.197" height="21.545" viewBox="0 0 28.197 21.545">
+  <g id="slider-svgrepo-com" transform="translate(0 -27.276)">
+    <g id="Group_104" data-name="Group 104" transform="translate(0 27.276)">
+      <g id="Group_103" data-name="Group 103">
+        <path id="Path_556" data-name="Path 556" d="M27.694,27.276H.5a.508.508,0,0,0-.5.513V48.308a.508.508,0,0,0,.5.513h27.19a.508.508,0,0,0,.5-.513V27.789A.508.508,0,0,0,27.694,27.276ZM1.007,31.893H5.539v9.234H1.007ZM27.19,41.126H25.68V31.893H27.19Zm0-10.259H25.176a.508.508,0,0,0-.5.513V41.639a.508.508,0,0,0,.5.513H27.19V47.8H1.007V42.152H6.042a.508.508,0,0,0,.5-.513V31.38a.508.508,0,0,0-.5-.513H1.007V28.3H27.19Z" transform="translate(0 -27.276)" fill="#979493"/>
+        <ellipse id="Ellipse_273" data-name="Ellipse 273" cx="1.007" cy="1.026" rx="1.007" ry="1.026" transform="translate(13.595 16.928)" fill="#979493"/>
+        <path id="Path_557" data-name="Path 557" d="M62.848,65.838h14.1a.508.508,0,0,0,.5-.513V55.065a.508.508,0,0,0-.5-.513h-14.1a.508.508,0,0,0-.5.513V65.324A.508.508,0,0,0,62.848,65.838Zm.5-10.26H76.443v9.234H63.351Z" transform="translate(-54.288 -50.961)" fill="#979493"/>
+        <rect id="Rectangle_335" data-name="Rectangle 335" width="1.511" height="1.026" transform="translate(8.56 17.441)" fill="#979493"/>
+        <rect id="Rectangle_336" data-name="Rectangle 336" width="1.511" height="1.026" transform="translate(11.077 17.441)" fill="#979493"/>
+        <rect id="Rectangle_337" data-name="Rectangle 337" width="1.511" height="1.026" transform="translate(16.616 17.441)" fill="#979493"/>
+        <rect id="Rectangle_338" data-name="Rectangle 338" width="1.511" height="1.026" transform="translate(19.134 17.441)" fill="#979493"/>
+      </g>
+    </g>
+  </g>
+</svg>
