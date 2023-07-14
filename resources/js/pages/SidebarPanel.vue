@@ -36,6 +36,15 @@
               </li>
 
               <li class="nav-item">
+                <router-link :to="{name:'SellerUsers'}" class="nav-link">
+                  <p>
+                    <i class="fa fa-cart-plus"></i>
+                    فروشندگان سایت
+                  </p>
+                </router-link>
+              </li>
+
+              <li class="nav-item">
                 <router-link :to="{name:'UserAwards'}" class="nav-link">
                   <p>
                     <i class="fa fa-gift"></i>
@@ -69,6 +78,40 @@
                     تبلیغات
                   </p>
                 </router-link>
+              </li>
+
+              <li class="nav-item has-treeview" :class="[
+                this.$route.name == 'StoreProducts' ||
+                this.$route.name == 'Stores' ?
+                'menu-open' : '']"
+              >
+                <a href="#" class="nav-link" :class="[this.$route.name == 'StoreProducts' || this.$route.name == 'Stores' ? 'active' : '']">
+                  <i class="fa fa-shopping-cart"></i>
+                  <p>
+                    مدیریت فروشگاه
+                    <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <router-link :to="{name:'Stores'}" class="nav-link">
+                      <i class="fa fa-circle-o text-success"></i>
+                      <p>لیست فروشگاه ها</p>
+                    </router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{name:'StoreProducts'}" class="nav-link">
+                      <i class="fa fa-circle-o text-warning"></i>
+                      <p>لیست محصولات</p>
+                    </router-link>
+                  </li>
+                  <li class="nav-item">
+                      <router-link :to="{name:'Invoices'}" class="nav-link">
+                          <i class="fa fa-circle-o text-primary"></i>
+                          <p>لیست سفارشات</p>
+                      </router-link>
+                  </li>
+                </ul>
               </li>
 
               <li class="nav-item">

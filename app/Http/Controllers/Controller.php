@@ -94,6 +94,27 @@ class Controller extends BaseController
         }
     }
 
+    public function uploadUserFileBase64($file , $path)
+    {
+        $image_parts = explode(";base64,", $file);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+
+        $file_name = uniqid() . '.'.$image_type;
+
+        $image_path = $path .'/'. $file_name;
+        if(env('DEPLOYED')){
+            Storage::disk('ftp')->put('uploads/'.$image_path, fopen($file, 'r+'));
+        }else{
+            $file_path = public_path().'/uploads/'. $path;
+            File::ensureDirectoryExists($file_path);
+            file_put_contents($file_path . '/' . $file_name, $image_base64);
+        }
+
+        return $image_path;
+    }
+
     public function deleteFile($path)
     {
         if(env('DEPLOYED')){
@@ -156,5 +177,37 @@ class Controller extends BaseController
     public function settings()
     {
         return Setting::find(1);
+    }
+
+    public function sendSMS($receptor , $token1 , $token2 = null)
+    {
+        $username_sms = env('SMS_USERNAME');
+        $password_sms = env('SMS_PASSWORD');
+        $from = '50004001039009';
+        if(env('DEPLOYED')){
+            $curl = curl_init();
+            curl_setopt_array($curl,
+                array(
+                    CURLOPT_URL => "http://api.payamak-panel.com/post/Send.asmx/SendByBaseNumber2",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => 'username='.$username_sms.'&password='.$password_sms.'&to='.$receptor.'&bodyId=70457&text='.$token1,
+                    CURLOPT_HTTPHEADER => array(
+                    "cache-control: no-cache",
+                    "content-type: application/x-www-form-urlencoded",
+                )
+            ));
+            $response = curl_exec($curl);
+            $error = curl_error($curl);
+            curl_close($curl);
+            if ($error) {
+                return false;
+            }
+        }
+        return true;
     }
 }

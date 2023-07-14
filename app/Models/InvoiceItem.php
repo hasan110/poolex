@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class InvoiceItem extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
+
+    protected $with = 'store_product';
 
     public function invoice()
     {

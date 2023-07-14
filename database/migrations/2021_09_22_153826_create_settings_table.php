@@ -26,6 +26,7 @@ class CreateSettingsTable extends Migration
             $table->integer('store_offer')->default(0);
             $table->integer('online_pay_award_cost')->default(0);
             $table->integer('vpn_required')->default(0);
+            $table->string('stores_shipping_cost')->nullable();
             $table->text('about_us_text')->nullable();
             $table->text('store_rules_text')->nullable();
             $table->text('store_panel_rules_text')->nullable();

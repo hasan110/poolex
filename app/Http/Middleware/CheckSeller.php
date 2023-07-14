@@ -19,10 +19,10 @@ class CheckSeller
     public function handle(Request $request, Closure $next)
     {
         $api_token = $request->header('api_token');
-        
+
         $user = User::where('api_token' , $api_token)->first();
 
-        if(!$user->is_seller){
+        if(intval($user->is_seller) !== 1){
             return Response::error(null , 'شما مجاز به استفاده از پنل فروشندگان نیستید .' , null , 401);
         }
 

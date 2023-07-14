@@ -16,7 +16,16 @@ class CategoryController extends Controller
 {
     public function get_category_products(Request $request)
     {
-        $category = Category::where('uuid',$request->id)->with('store_products')->first();
+        $cityCode = $request->header('cityCode');
+        // $category = Category::where('uuid',$request->id)->with(['store_products'=>function($q) use ($cityCode){
+        //     $q->where('status' , 1)->whereHas('store', function($q) use ($cityCode){
+        //         $q->where('city',$cityCode);
+        //     });
+        // }])->first();
+
+        $category = Category::where('uuid',$request->id)->with(['store_products'=>function($q) use ($cityCode){
+            $q->where('status' , 1);
+        }])->first();
 
         if(!$category)
         {
@@ -25,4 +34,14 @@ class CategoryController extends Controller
 
         return Response::success($category , 'اطلاعات با موفقیت دریافت شد .');
     }
+
+    // seller
+
+    public function get_category_list()
+    {
+        $list = Category::select('id','title')->where('type','store_category')->get();
+
+        return Response::success($list , 'اطلاعات با موفقیت دریافت شد .');
+    }
+
 }

@@ -31,6 +31,9 @@
                   <template v-if="item.type === 'category'">
                       دسته بندی
                   </template>
+                  <template v-if="item.type === 'store_category'">
+                      دسته بندی فروشگاه
+                  </template>
                   <template v-else>
                       ژانر
                   </template>
@@ -76,8 +79,26 @@
             <div class="col-8 text-right">
               <select v-model="item.type" class="form-control">
                 <option :value="'category'">دسته بندی</option>
+                <option :value="'store_category'">دسته بندی فروشگاه</option>
                 <option :value="'genre'">ژانر</option>
               </select>
+            </div>
+          </div>
+
+            <div class="row mb-2">
+                <div class="col-4 text-left">* رنگ  :</div>
+                <div class="col-8">
+                    <input type="color" v-model="item.color" class="form-control">
+                    <div v-if="errors.color" class="invalid-feedback">
+                        {{errors.color[0]}}
+                    </div>
+                </div>
+            </div>
+
+          <div class="row mb-2">
+            <div class="col-4 text-left">انتخاب آیکون :</div>
+            <div class="col-8 text-right">
+              <input type="file" @change="file_selected()" ref="app_file" class="form-control form-control-sm">
             </div>
           </div>
 
@@ -119,10 +140,28 @@
             <div class="col-8 text-right">
               <select v-model="edit_item.type" class="form-control">
                 <option :value="'category'">دسته بندی</option>
+                <option :value="'store_category'">دسته بندی فروشگاه</option>
                 <option :value="'genre'">ژانر</option>
               </select>
             </div>
           </div>
+
+            <div class="row mb-2">
+                <div class="col-4 text-left">* رنگ  :</div>
+                <div class="col-8">
+                    <input type="color" v-model="edit_item.color" class="form-control">
+                    <div v-if="errors.color" class="invalid-feedback">
+                        {{errors.color[0]}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4 text-left">ویرایش آیکون :</div>
+                <div class="col-8 text-right">
+                    <input type="file" @change="edit_file_selected()" ref="edit_app_file" class="form-control form-control-sm">
+                </div>
+            </div>
 
         </div>
         <div class="card-footer">
@@ -155,6 +194,14 @@ export default {
     }
   },
   methods:{
+    file_selected()
+    {
+        this.item.icon = this.$refs.app_file.files[0];
+    },
+    edit_file_selected()
+    {
+        this.edit_item.new_icon = this.$refs.edit_app_file.files[0];
+    },
     getList(){
       this.SPIN_LOADING(1)
       this.$axios.get(`categories/list`)
@@ -168,7 +215,15 @@ export default {
     },
     Create(){
       this.SPIN_LOADING(1)
-      this.$axios.post(`categories/add` , this.item)
+      const form = new FormData;
+      for (const [key, value] of Object.entries(this.item)) {
+        if(value || value == 0)
+        {
+          form.append(key , value);
+        }
+      }
+
+      this.$axios.post(`categories/add` , form)
       .then(res => {
         this.getList()
         this.createModal = false
@@ -198,7 +253,14 @@ export default {
     },
     editItem(){
       this.SPIN_LOADING(1)
-      this.$axios.post(`categories/edit` , this.edit_item)
+        const form = new FormData;
+        for (const [key, value] of Object.entries(this.edit_item)) {
+            if(value || value == 0)
+            {
+                form.append(key , value);
+            }
+        }
+      this.$axios.post(`categories/edit` , form)
       .then(res => {
         this.getList()
         this.editModal = false

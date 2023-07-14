@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('province')->nullable();
             $table->integer('coins')->default(0);
             $table->integer('cash')->default(0);
+            $table->integer('income')->default(0);
             $table->string('profile')->nullable();
             $table->integer('status')->default(0);
             $table->integer('is_seller')->default(0);

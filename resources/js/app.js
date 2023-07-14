@@ -44,10 +44,10 @@ import { mapState, mapActions } from 'vuex';
 Vue.mixin({
     data: function() {
         return {
-            ImageUrl: 'http://localhost:8000/uploads/',
-            StaticUrl: 'http://localhost:8000/',
-            // ImageUrl:'https://dl.polexofficial.com/uploads/',
-            // StaticUrl:'https://panel.polexofficial.com/',
+            // ImageUrl: 'http://localhost:8000/uploads/',
+            // StaticUrl: 'http://localhost:8000/',
+            ImageUrl:'https://dl.polexofficial.com/uploads/',
+            StaticUrl:'https://panel.polexofficial.com/',
             // socket : io('http://localhost:3000/'),
             // socket : io('https://node.arzine.org/')
         }

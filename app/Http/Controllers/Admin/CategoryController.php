@@ -32,14 +32,23 @@ class CategoryController extends Controller
     {
         $request->validate([
             'title' => ['required'],
+            'icon' => ['image'],
             'type' => ['required']
         ]);
         $item = Category::create([
             'uuid'=>uniqid(),
             'title'=>$request->title,
             'type'=>$request->type,
+            'color'=>$request->color ?? null,
             'priority'=>$request->priority,
         ]);
+
+        if($request->hasFile('icon'))
+        {
+            $item->update([
+                'icon' => $this->uploadFile($request->icon , 'categories')
+            ]);
+        }
 
         return Response::success($item ,'عملیات با موفقیت انجام شد .');
     }
@@ -63,8 +72,20 @@ class CategoryController extends Controller
         $item->update([
             'title'=>$request->title,
             'type'=>$request->type,
+            'color'=>$request->color ?? null,
             'priority'=>$request->priority
         ]);
+
+        if($request->hasFile('new_icon'))
+        {
+            if($item->icon)
+            {
+                $this->deleteFile($item->icon);
+            }
+            $item->update([
+                'icon' => $this->uploadFile($request->new_icon , 'categories')
+            ]);
+        }
 
         return Response::success($item ,'اطلاعات با موفقیت بروزرسانی شد .');
     }
@@ -72,6 +93,11 @@ class CategoryController extends Controller
     public function delete(Request $request)
     {
         $item = Category::find($request->id);
+
+        if($item->icon)
+        {
+            $this->deleteFile($item->icon);
+        }
 
         $item->delete();
 

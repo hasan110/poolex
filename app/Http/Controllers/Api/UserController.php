@@ -177,7 +177,7 @@ class UserController extends Controller
 
         return Response::success($user , 'عملیات با موفقیت انجام شد .');
     }
-    
+
     public function add_credit(Request $request)
     {
         $validation = $this->validateData($request , [
@@ -200,7 +200,7 @@ class UserController extends Controller
         ]);
 
         $callback = route('pay.add_credit' , ['token'=>$pay->token]);
-        
+
         $data = array(
             "merchant_id" => 'b90349e6-9dd2-4e5e-a3e7-6477f81ab6e4',
             "amount" => $pay->amount*10,
@@ -244,7 +244,72 @@ class UserController extends Controller
                 return Response::error(null , "خطای اتصال به درگاه (".$result['errors']['message'].") ." , null);
             }
         }
-        
+
+    }
+
+    public function sellerRegister(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $user->update([
+            'is_seller' => 1
+        ]);
+
+        return Response::success(null , null);
+    }
+
+    public function get_bank_account(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+        $bank = $user->bank_account;
+        if(!$bank){
+            $bank = [];
+        }
+        $bank['new_card_image'] = null;
+        return Response::success($bank , null);
+    }
+
+    public function edit_bank_account(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $validation = $this->validateData($request , [
+            'card_number' => 'required',
+            'shaba_number' => 'required',
+            'new_card_image' => 'image'
+        ]);
+        if($validation){
+            return $validation;
+        }
+
+        $bank = $user->bank_account;
+        if($bank)
+        {
+            $bank->update([
+                'card_number' => $request->card_number,
+                'shaba_number' => $request->shaba_number,
+                'status' => 0
+            ]);
+        }else{
+            $bank = $user->bank_account()->create([
+                'card_number' => $request->card_number,
+                'shaba_number' => $request->shaba_number,
+                'card_image' => ''
+            ]);
+        }
+
+        if($request->hasFile('new_card_image')){
+            if($bank->card_image){
+                // File::delete(public_path().'/uploads/'.$bank->card_image);
+            }
+            $bank->update([
+                'card_image' => $this->uploadFile($request->new_card_image , 'users/'.$user->id),
+            ]);
+        }
+
+        $user = $this->getUserByToken($request);
+
+        return Response::success($bank , 'اطلاعات حساب با موفقیت بروزرسانی شد .');
     }
 
 }

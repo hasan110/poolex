@@ -50,8 +50,16 @@ class UserController extends Controller
             elseif($sort == 'pending_users'){
                 $users = $users->where('status' , 1);
             }
+            elseif($sort == 'has_income'){
+                $users = $users->where('income' , '>' , 0);
+            }
         }else{
             $users = $users->orderBy('created_at' , 'desc');
+        }
+
+        if($request->has('is_seller'))
+        {
+            $users = $users->where('is_seller' , 1);
         }
 
         $users = $users->paginate($this->pagination);
@@ -163,6 +171,7 @@ class UserController extends Controller
             'birth_date'=>$request->birth_date,
             'birth_place'=>$request->birth_place,
             'identifier_code'=>$request->identifier_code,
+            'is_seller'=>isset($request->is_seller) && $request->is_seller ? 1 : 0,
             'email'=>$request->email
         ]);
 
@@ -342,5 +351,25 @@ class UserController extends Controller
         }
 
         return true;
+    }
+
+    public function checkoutSeller(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if(!$user){
+            return response()->json([
+                'data'=> null,
+                'message'=> 'ناموفق.',
+                'errors' => null,
+            ],400);
+        }
+        $user->update([
+            'income'=>0
+        ]);
+        return response()->json([
+            'data'=> $user,
+            'message'=> 'عملیات با موفقیت انجام شد.',
+            'errors' => null,
+        ],200);
     }
 }

@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         $validation = $this->validateData($request , [
             'mobile_number' => 'required | numeric',
-            'password' => 'required'
+            'password' => 'required | min:6'
         ]);
         if($validation){
             return $validation;
@@ -122,7 +122,13 @@ class AuthController extends Controller
             ],400);
         }
 
+        $seller = 0;
+        if($request->has('seller') && $request->seller == 1){
+            $seller = 1;
+        }
+
         $user = resolve(UserRepository::class)->createUserByNumber([
+            'is_seller'=>$seller,
             'password'=>$verify_code->password,
             'mobile_number'=>$verify_code->phone
         ]);

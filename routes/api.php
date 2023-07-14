@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('App\Http\Controllers\Api')->group(function () {
 
     Route::post('/registerByNumber', 'AuthController@registerByNumber');
+    Route::post('/loginByNumber' , 'AuthController@loginByNumber');
     Route::post('/numberVerify' , 'AuthController@numberVerify');
     Route::post('/send_password_by_number' , 'AuthController@send_password_by_number');
     Route::post('/register', 'AuthController@register');
@@ -103,32 +104,61 @@ Route::namespace('App\Http\Controllers\Api')->group(function () {
     Route::get('/get_category_products/{id}', 'CategoryController@get_category_products');
     Route::get('/get_product_data/{id}', 'StoreProductController@get_product_data');
     Route::get('/get_store_data/{id}', 'StoreController@get_store_data');
+    Route::post('/get_cart_products', 'StoreProductController@get_cart_products');
+    Route::post('/search_products', 'StoreProductController@search_products');
 
     Route::middleware('CheckApiAuth')->group(function () {
-        
+
         Route::post('/product/toggle_favorite', 'StoreProductController@toggle_favorite');
         Route::get('/product/favorites', 'StoreProductController@favorites');
-        
+
         Route::post('/product/add_comment', 'StoreProductController@add_comment');
-        
+
         Route::post('/add_credit', 'UserController@add_credit');
-        
-        Route::post('/get_cart_products', 'StoreProductController@get_cart_products');
-        
+
+
         Route::post('/submit_order', 'InvoiceController@submit_order');
-        
+        Route::get('/get_order_details/{id}', 'InvoiceController@user_order_details');
+        Route::post('/get_order_list', 'InvoiceController@user_order_list');
+        Route::post('/pay_order', 'InvoiceController@pay_order');
+        Route::post('/cash_pay_order', 'InvoiceController@cash_pay_order');
+        Route::post('/delivered_order', 'InvoiceController@delivered_order');
+
         Route::get('/getChatList', 'ChatController@getChatList');
         Route::get('/getChatDetails/{chat_id}', 'ChatController@getChatDetails');
         Route::post('/sendChatMessage', 'ChatController@sendChatMessage');
         Route::post('/newChat', 'ChatController@newChat');
-        
+
+        Route::get('/sellerRegister', 'UserController@sellerRegister');
+
         // seller panel
         Route::middleware('CheckSeller')->group(function () {
 
+            Route::get('/store/get-categories', 'CategoryController@get_category_list');
+
+            Route::get('/get_seller_global_data', 'IndexController@get_seller_global_data');
             Route::get('/store/list', 'StoreProductController@store_list');
             Route::get('/store/data/{id}', 'StoreProductController@store_data');
             Route::post('/store/add', 'StoreProductController@add_store');
+            Route::post('/store/edit', 'StoreProductController@edit_store');
+            Route::post('/store/get-data', 'StoreProductController@get_store_data');
             Route::post('/store/add-product', 'StoreProductController@add_product');
+            Route::post('/store/edit-product', 'StoreProductController@edit_product');
+            Route::post('/store/delete-product', 'StoreProductController@delete_product');
+            Route::post('/store/get-product-data', 'StoreProductController@get_store_product_data');
+            Route::post('/store/get-all-products', 'StoreProductController@get_all_products');
+            Route::post('/store/discount-products', 'StoreProductController@discount_products');
+
+            Route::post('/store/order', 'InvoiceController@seller_order_list');
+            Route::get('/store/order-details/{id}', 'InvoiceController@seller_order_details');
+            Route::post('/store/change-order-status', 'InvoiceController@seller_change_order_status');
+
+            Route::get('/getSellerChatList', 'ChatController@getSellerChatList');
+            Route::get('/getSellerChatDetails/{chat_id}', 'ChatController@getSellerChatDetails');
+            Route::post('/sendSellerChatMessage', 'ChatController@sendSellerChatMessage');
+
+            Route::get('/get_bank_account', 'UserController@get_bank_account');
+            Route::post('/edit_bank_account', 'UserController@edit_bank_account');
 
         });
 

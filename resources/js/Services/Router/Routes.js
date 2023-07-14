@@ -4,6 +4,7 @@ import DataChart from '../../pages/DataChart.vue';
 import ViewRanking from '../../pages/views/ViewRanking.vue';
 
 import Users from '../../pages/users/Users.vue';
+import SellerUsers from '../../pages/users/SellerUsers.vue';
 import UserAwards from '../../pages/users/UserAwards.vue';
 import User from '../../pages/users/User.vue';
 
@@ -11,6 +12,10 @@ import Admins from '../../pages/admin/Admins.vue';
 
 import Harvests from '../../pages/harvests/Harvests.vue';
 import Harvest from '../../pages/harvests/Harvest.vue';
+
+import Stores from '../../pages/stores/Stores.vue';
+import StoreProducts from '../../pages/stores/StoreProducts.vue';
+import Invoices from '../../pages/invoices/Invoices.vue';
 
 import NotResponsedTickets from '../../pages/tickets/NotResponsedTickets.vue';
 import ResponsedTickets from '../../pages/tickets/ResponsedTickets.vue';
@@ -43,6 +48,7 @@ const allUrl = [{
         { path: 'ViewRanking', name: 'ViewRanking', component: ViewRanking },
 
         { path: 'Users', name: 'Users', component: Users },
+        { path: 'SellerUsers', name: 'SellerUsers', component: SellerUsers },
         { path: 'UserAwards', name: 'UserAwards', component: UserAwards },
         { path: 'User/:id', name: 'User', component: User },
 
@@ -50,6 +56,10 @@ const allUrl = [{
 
         { path: 'Harvests', name: 'Harvests', component: Harvests },
         { path: 'Harvest/:id', name: 'Harvest', component: Harvest },
+
+        { path: 'Stores', name: 'Stores', component: Stores },
+        { path: 'StoreProducts', name: 'StoreProducts', component: StoreProducts },
+        { path: 'Invoices', name: 'Invoices', component: Invoices },
 
         { path: 'NotResponsedTickets', name: 'NotResponsedTickets', component: NotResponsedTickets },
         { path: 'ResponsedTickets', name: 'ResponsedTickets', component: ResponsedTickets },

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 
 class SlideShowController extends Controller
 {
-    private $slideshow_types = ['slideshow','movie_slideshow','movie_banner'];
+    private $slideshow_types = ['slideshow','movie_slideshow','store_slideshow','movie_banner'];
 
     public function list(Request $request)
     {

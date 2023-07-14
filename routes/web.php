@@ -14,6 +14,7 @@ Route::namespace('App\Http\Controllers\Admin')->group(function () {
     Route::get('/buy_offer', 'PayController@buy_offer')->name('pay.buy_offer');
     Route::get('/buy_award', 'PayController@buy_award')->name('pay.buy_award');
     Route::get('/add_credit', 'PayController@add_credit')->name('pay.add_credit');
+    Route::get('/pay_order', 'PayController@pay_order')->name('pay.pay_order');
 
     Route::middleware('CheckAdminAuth')->group(function () {
 
@@ -26,6 +27,7 @@ Route::namespace('App\Http\Controllers\Admin')->group(function () {
             Route::post('/giveAward', 'UserController@giveAward')->name('giveAward');
             Route::post('/giveReferal', 'UserController@giveReferal')->name('giveReferal');
             Route::get('/updateKeys', 'UserController@updateKeys')->name('updateKeys');
+            Route::post('/checkoutSeller', 'UserController@checkoutSeller')->name('checkoutSeller');
         });
 
         Route::prefix('/user_awards')->group(function () {
@@ -132,6 +134,31 @@ Route::namespace('App\Http\Controllers\Admin')->group(function () {
             Route::get('/slideshow/{id}', 'SlideShowController@get')->name('getSlideShow');
             Route::post('/edit', 'SlideShowController@edit')->name('editSlideShow');
             Route::post('/delete', 'SlideShowController@delete')->name('deleteSlideShow');
+        });
+
+        Route::prefix('/stores')->group(function () {
+            Route::post('/list', 'StoreController@list')->name('storeList');
+            Route::post('/add', 'StoreController@add')->name('addStore');
+            Route::get('/store/{id}', 'StoreController@get')->name('getStore');
+            Route::post('/edit', 'StoreController@edit')->name('editStore');
+            Route::post('/delete', 'StoreController@delete')->name('deleteStore');
+            Route::post('/ChangeStatus', 'StoreController@ChangeStatus')->name('ChangeStatusStore');
+        });
+
+        Route::prefix('/store_products')->group(function () {
+            Route::post('/list', 'StoreProductController@list')->name('storeProductList');
+            Route::post('/add', 'StoreProductController@add')->name('addStoreProduct');
+            Route::get('/store_product/{id}', 'StoreProductController@get')->name('getStoreProduct');
+            Route::post('/edit', 'StoreProductController@edit')->name('editStoreProduct');
+            Route::post('/delete', 'StoreProductController@delete')->name('deleteStoreProduct');
+            Route::post('/ChangeStatus', 'StoreProductController@ChangeStatus')->name('ChangeStatusStoreProduct');
+        });
+
+        Route::prefix('/invoices')->group(function () {
+            Route::post('/list', 'InvoiceController@list')->name('invoicesList');
+            Route::get('/invoice/{id}', 'InvoiceController@get')->name('getInvoice');
+            Route::post('/edit', 'InvoiceController@edit')->name('editInvoice');
+            Route::post('/operate', 'InvoiceController@operate')->name('operateInvoice');
         });
 
         Route::get('/settings' , 'SettingController@setting')->name('settings');

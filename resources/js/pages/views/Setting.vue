@@ -135,6 +135,10 @@
           <label>شماره ورژن اپ</label>
           <input v-model="data.app_version_code" class="form-control form-control-sm" autocomplete="off">
         </div>
+        <div class="form-group col-md-6 col-xs-12">
+          <label>هزینه ارسال سفارشات در فروشگاه</label>
+          <input v-model="data.stores_shipping_cost" class="form-control form-control-sm">
+        </div>
       </div>
       <div class="text-center">
         <button @click="editItem()" class="btn btn-primary">ثبت تغییرات</button>

@@ -17,11 +17,24 @@ use Carbon\Carbon;
 
 class StoreProductController extends Controller
 {
+    public function search_products(Request $request)
+    {
+        $cityCode = $request->header('cityCode');
+        $search_key = $request->search_key;
+        $products = StoreProduct::where('status',1)->where(function($query) use ($search_key) {
+            $query->where('name','like', '%' . $search_key . '%')
+                ->orWhere('description','like', '%' . $search_key . '%');
+        })->limit(20)->get();
+
+        return Response::success($products , 'اطلاعات با موفقیت دریافت شد .');
+    }
+
     public function get_product_data(Request $request)
     {
         $user = $this->getUserByToken($request);
+        $cityCode = $request->header('cityCode');
 
-        $product = StoreProduct::where('uuid',$request->id)->first();
+        $product = StoreProduct::where('uuid',$request->id)->where('status',1)->first();
 
         if(!$product)
         {
@@ -33,14 +46,14 @@ class StoreProductController extends Controller
         $final_same_products = [];
         foreach(array_unique($related_categories) as $item)
         {
-            $store_product = StoreProduct::whereId($item)->first();
-            
+            $store_product = StoreProduct::whereId($item)->where('status' , 1)->first();
+
             if($store_product)
             {
                 $final_same_products[] = $store_product;
             }
         }
-        
+
         $product['same_products'] = $final_same_products;
 
         $comments = Feedback::where('product_id' , $product->id)->where('type' , 'comment')->whereStatus(1)->get();
@@ -55,25 +68,27 @@ class StoreProductController extends Controller
         }
 
         $product['is_favorite'] = 0;
-        
+
         if($user){
             $favorite = Favorite::where('user_id' , $user->id)->where('store_product_id' , $product->id)->first();
             if($favorite){
                 $product['is_favorite'] = 1;
             }
         }
-        
+
+        $product->increment('views');
+
         $product['comments'] = $final_comments_list;
 
         return Response::success($product , 'اطلاعات با موفقیت دریافت شد .');
     }
-    
+
     public function favorites(Request $request)
     {
         $user = $this->getUserByToken($request);
 
         $products = $user->favorite_products;
-        
+
         return Response::success($products , 'لیست محصولات مورد علاقه دریافت شد .');
     }
 
@@ -97,7 +112,7 @@ class StoreProductController extends Controller
                 'store_product_id'=>$product->id
             ]);
         }
-        
+
         return Response::success(null , 'موفق .');
     }
 
@@ -129,7 +144,7 @@ class StoreProductController extends Controller
             'stars'=>$request->stars,
             'status'=>0
         ]);
-        
+
         return Response::success(null , 'موفق .');
     }
 
@@ -138,15 +153,14 @@ class StoreProductController extends Controller
         $user = $this->getUserByToken($request);
 
         $validation = $this->validateData($request , [
-            'products' => 'required|array',
-            'products.*' => 'required'
+            'products' => 'array'
         ]);
         if($validation){
             return $validation;
         }
 
         $products = [];
-        
+
         foreach($request->products as $item)
         {
             $product = StoreProduct::where('uuid',$item['product_id'])->first();
@@ -157,7 +171,7 @@ class StoreProductController extends Controller
                 $products[] = $product;
             }
         }
-        
+
         return Response::success($products , 'موفق .');
     }
 
@@ -188,6 +202,18 @@ class StoreProductController extends Controller
         return Response::success($store , 'فروشگاه با موفقیت دریافت شد.');
     }
 
+    public function get_store_data(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $store = Store::where([
+            'uuid'=> $request->id,
+            'user_id'=> $user->id
+        ])->first();
+
+        return Response::success($store , 'فروشگاه با موفقیت دریافت شد.');
+    }
+
     public function add_store(Request $request)
     {
         $user = $this->getUserByToken($request);
@@ -198,8 +224,7 @@ class StoreProductController extends Controller
             'address' => 'required',
             'owner_name' => 'required',
             'description' => 'required',
-            'shipping_time' => 'required',
-            'shipping_cost' => 'required|numeric'
+            'shipping_time' => 'required'
         ]);
         if ($validation) { return $validation; }
 
@@ -225,13 +250,70 @@ class StoreProductController extends Controller
             'name'=> $request->name,
             'owner_name'=> $request->owner_name,
             'banner'=> $banner,
+            'city'=> null,
             'address'=> $request->address,
             'description'=> $request->description,
             'shipping_time'=> $s_time,
-            'shipping_cost'=> $request->shipping_cost
+            'shipping_cost'=> $this->settings()->stores_shipping_cost
         ]);
 
         return Response::success($store , 'فروشگاه شما با موفقیت ثبت شد. منتظر تایید ادمین باشید.');
+    }
+
+    public function edit_store(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $store = Store::where([
+            'uuid'=> $request->uuid,
+            'user_id'=> $user->id
+        ])->first();
+
+        if(!$store)
+        {
+            return Response::error(null , 'فروشگاه یافت نشد .' , null);
+        }
+
+        $validation = $this->validateData($request , [
+            'new_banner' => 'image',
+            'name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'owner_name' => 'required',
+            'description' => 'required'
+        ]);
+        if ($validation) { return $validation; }
+
+        if($request->hasFile('new_banner'))
+        {
+            $banner = $this->uploadFile($request->new_banner , 'stores');
+        }else{
+            $banner = $store->banner;
+        }
+
+        $store->update([
+            'name'=> $request->name,
+            'owner_name'=> $request->owner_name,
+            'banner'=> $banner,
+            'city'=> $request->city,
+            'address'=> $request->address,
+            'description'=> $request->description,
+            'status'=> 0,
+        ]);
+
+        return Response::success($store , 'فروشگاه شما با موفقیت ویرایش شد. منتظر تایید ادمین باشید.');
+    }
+
+    public function get_store_product_data(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $product = StoreProduct::where('id',$request->id)->where('user_id',$user->id)->first();
+        $product['new_images'] = [];
+        $categories = $product->categories()->pluck('id')->toArray();
+        $product['categories'] = count($categories) > 0 ? $categories[0] : null;
+
+        return Response::success($product , 'اطلاعات با موفقیت دریافت شد .');
     }
 
     public function add_product(Request $request)
@@ -240,7 +322,6 @@ class StoreProductController extends Controller
 
         $validation = $this->validateData($request , [
             'images' => 'required|array',
-            'images.*' => 'required',
             'name' => 'required',
             'description' => 'required',
             'inventory' => 'required',
@@ -265,7 +346,7 @@ class StoreProductController extends Controller
         {
             foreach($request->images as $file)
             {
-                $img = $this->uploadFile($file , 'products/'.$store->id);
+                $img = $this->uploadUserFileBase64($file , 'products/'.$store->id);
                 $item = [
                     'path'=>$img,
                     'type'=>'image'
@@ -289,7 +370,158 @@ class StoreProductController extends Controller
             'description'=> $request->description
         ]);
 
+        if($request->categories)
+        {
+            foreach (explode(',' , $request->categories) as $item)
+            {
+                $category = Category::find($item);
+                if($category)
+                {
+                    $product->categories()->attach($category);
+                }
+            }
+        }
+
         return Response::success($product , 'محصول شما با موفقیت ثبت شد. منتظر تایید ادمین باشید.');
+    }
+
+    public function edit_product(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $validation = $this->validateData($request , [
+            'id' => 'required',
+            'new_images' => 'array',
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'inventory' => 'required|numeric'
+        ]);
+        if ($validation) { return $validation; }
+
+        $product = StoreProduct::where('id',$request->id)->where('user_id',$user->id)->first();
+
+        if(!$product)
+        {
+            return Response::error(null , 'محصول یافت نشد .' , null);
+        }
+
+        $files = $product->files;
+        if($request->has('new_images'))
+        {
+            foreach($request->new_images as $file)
+            {
+                $img = $this->uploadUserFileBase64($file , 'products/'.$product->store->id);
+                $item = [
+                    'path'=>$img,
+                    'type'=>'image'
+                ];
+                $files[] = $item;
+            }
+        }
+
+        $slug = str_replace(' ' , '-' , $request->name);
+        $product->update([
+            'name'=> $request->name,
+            'slug'=> $slug,
+            'price'=> $request->price,
+            'inventory'=> $request->inventory,
+            'description'=> $request->description,
+            'files'=> $files,
+            'status'=> 0,
+        ]);
+
+        if($request->categories)
+        {
+            $product->categories()->detach();
+            foreach (explode(',' , $request->categories) as $item)
+            {
+                $category = Category::find($item);
+                if($category)
+                {
+                    $product->categories()->attach($category);
+                }
+            }
+        }
+
+        return Response::success($product , 'محصول شما با موفقیت ویرایش شد.');
+    }
+
+    public function delete_product(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+        $validation = $this->validateData($request , [
+            'id' => 'required',
+        ]);
+        if ($validation) { return $validation; }
+        $product = StoreProduct::where('id',$request->id)->where('user_id',$user->id)->first();
+        if(!$product)
+        {
+            return Response::error(null , 'محصول یافت نشد .' , null);
+        }
+        $product->delete();
+        return Response::success($product , 'محصول شما با موفقیت حذف شد.');
+    }
+
+    public function get_all_products(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        $products = StoreProduct::where([
+            'user_id'=> $user->id
+        ]);
+
+        if($request->search)
+        {
+            $products = $products->where('name','like', '%' . $request->search . '%');
+        }
+
+        $products = $products->take(50)->latest()->get();
+
+        foreach ($products as $item)
+        {
+            $new_price = null;
+            if($item->price_before_off)
+            {
+                $new_price = $item->price;
+            }
+            $item->new_price = $new_price;
+        }
+
+        return Response::success($products , 'لیست محصولات با موفقیت دریافت شد');
+    }
+
+    public function discount_products(Request $request)
+    {
+        $user = $this->getUserByToken($request);
+
+        if(is_array($request->products))
+        {
+            foreach ($request->products as $product)
+            {
+                $p = StoreProduct::where([
+                    'user_id'=>$user->id,
+                    'id'=>$product['id']
+                ])->first();
+                if(!$product)
+                {
+                    continue;
+                }
+                if($product["new_price"] > $p->price)
+                { continue; }
+
+                $discount = intval((($p->price - $product["new_price"]) / $p->price) * 100);
+                $p->update([
+                    'price'=>$product["new_price"],
+                    'price_before_off'=>$p->price,
+                    'discount'=>$discount,
+                ]);
+            }
+        }else{
+            return Response::error(null , 'لیست محصولات را به درستی ارسال کنید.' , null);
+        }
+
+        return Response::success(null , 'اعمال تخفیف انجام شد.');
     }
 
 }

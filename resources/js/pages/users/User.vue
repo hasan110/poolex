@@ -79,6 +79,9 @@
         <div class="operate" @click="giveReferalModal = !giveReferalModal">
           <span class="btn btn-outline-primary mx-1">اهدای رفرال</span>
         </div>
+        <div v-if="parseInt(user.is_seller) && user.income > 0" class="operate" @click="checkoutSeller()">
+          <span class="btn btn-success mx-1">تسویه فروشنده</span>
+        </div>
       </div>
       <div class="personal-info-box">
         <div class="content-personal-info-box">
@@ -113,6 +116,9 @@
           </div>
           <div class="row m-4">
             تعداد سکه : {{user.coins}} ----- موجودی : {{user.cash}}
+          </div>
+          <div v-if="parseInt(user.is_seller)" class="row m-4">
+            درآمد : {{user.income}}
           </div>
           <div class="row m-4">
             تعداد کل بازدید ها : {{user.all_views}} ----- تعداد بازدید های امروز : {{user.today_views}}
@@ -278,9 +284,15 @@
             </div>
           </div>
           <div class="row mb-2">
-              <div class="col-4 text-left">کد معرف :</div>
+            <div class="col-4 text-left">کد معرف :</div>
             <div class="col-8">
               <input type="text" v-model="edit_user.identifier_code" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4 text-left">فروشنده است؟ :</div>
+            <div class="col-8">
+              <input type="checkbox" v-model="edit_user.is_seller" class="form-control">
             </div>
           </div>
         </div>
@@ -551,6 +563,23 @@ export default {
         if(error.message){ this.$alert(error.message , "ناموفق" , "error"); }
         this.SPIN_LOADING(0)
       });
+    },
+    checkoutSeller(){
+      if(confirm('از تسویه حساب این فروشنده اطمینان کامل دارید؟')){
+          this.SPIN_LOADING(1)
+          this.$axios.post(`users/checkoutSeller`,{
+              user_id : this.user.id
+          })
+          .then(res => {
+              this.getUser(this.$route.params.id)
+              this.SPIN_LOADING(0)
+          })
+          .catch(err => {
+              const error = err.response.data
+              if(error.message){ this.$alert(error.message , "ناموفق" , "error"); }
+              this.SPIN_LOADING(0)
+          });
+      }
     },
   },
   mounted(){

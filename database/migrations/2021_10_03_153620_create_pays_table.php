@@ -21,6 +21,7 @@ class CreatePaysTable extends Migration
 
             $table->integer('plan_id')->nullable();
             $table->integer('product_id')->nullable();
+            $table->integer('invoice_id')->nullable();
             $table->integer('amount');
             $table->text('token');
             $table->boolean('status')->default(0);

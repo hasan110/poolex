@@ -38,6 +38,7 @@
                 <template v-if="item.type == 'slideshow'">اسلایدشو</template>
                 <template v-if="item.type == 'movie_slideshow'">اسلایدشو فیلم ها</template>
                 <template v-if="item.type == 'movie_banner'">بنر فیلم</template>
+                <template v-if="item.type == 'store_slideshow'">اسلایدشو فروشگاه</template>
               </td>
               <td>
                 <button @click="getData(item.id)" class="btn btn-sm btn-primary">ویرایش</button>
@@ -101,6 +102,7 @@
             <div class="col-8 text-right">
               <select v-model="item.type" class="form-control">
                 <option :value="'slideshow'">اسلایدشو</option>
+                <option :value="'store_slideshow'">اسلایدشو فروشگاه</option>
                 <option :value="'movie_slideshow'">اسلایدشو فیلم ها</option>
                 <option :value="'movie_banner'">بنر فیلم</option>
               </select>
@@ -173,6 +175,7 @@
             <div class="col-8 text-right">
               <select v-model="edit_item.type" class="form-control">
                 <option :value="'slideshow'">اسلایدشو</option>
+                <option :value="'store_slideshow'">اسلایدشو فروشگاه</option>
                 <option :value="'movie_slideshow'">اسلایدشو فیلم ها</option>
                 <option :value="'movie_banner'">بنر فیلم</option>
               </select>

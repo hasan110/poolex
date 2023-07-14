@@ -37,6 +37,7 @@ class UserRepository
 
     $user = User::create([
       'mobile_number'=>$data['mobile_number'],
+      'is_seller'=>$data['is_seller'],
       'password'=>$hash,
       'referral_id'=>Str::random(5),
       'api_token'=>Str::random(120)
@@ -72,11 +73,11 @@ class UserRepository
       $users = $users->whereHas('user_detail', function($q) use ($status){
         $q->where('user_status',$status);
       });
-      
+
     }
 
     $users = $users->with('user_detail')->paginate($this->pagination);
-    
+
     foreach($users as $user){
       $user['registered_at'] = Jalalian::forge($user->created_at)->format('%d / %m / %Y');
 
