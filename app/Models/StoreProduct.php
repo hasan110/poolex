@@ -18,6 +18,11 @@ class StoreProduct extends Model
 
     protected $with = ['store'];
 
+    public function getSlugAttribute()
+    {
+        return str_replace(' ' , '-' , $this->name);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
