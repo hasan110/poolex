@@ -18,7 +18,7 @@ class CheckSeller
      */
     public function handle(Request $request, Closure $next)
     {
-        $api_token = $request->header('api_token');
+        $api_token = $request->header('x-api-key');
 
         $user = User::where('api_token' , $api_token)->first();
 
