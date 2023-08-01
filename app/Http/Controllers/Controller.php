@@ -20,7 +20,7 @@ class Controller extends BaseController
 
     public function getUserByToken($request)
     {
-        $api_token = $request->header('api_token');
+        $api_token = $request->header('x-api-key');
 
         $user = User::where('api_token' , $api_token)->first();
 
