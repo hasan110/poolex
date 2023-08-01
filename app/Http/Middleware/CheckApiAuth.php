@@ -18,14 +18,14 @@ class CheckApiAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        $api_token = $request->header('api_token');
+        $api_token = $request->header('x-api-key');
 
         if(!$api_token){
             return Response::error(null , 'کاربر احراز هویت نشده است .' , null , 401);
         }
-        
+
         $user = User::where('api_token' , $api_token)->first();
-        
+
         if(!$user){
             return Response::error(null , 'توکن نامعتبر است .' , null , 401);
         }
