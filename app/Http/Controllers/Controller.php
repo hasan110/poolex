@@ -78,20 +78,18 @@ class Controller extends BaseController
 
     public function uploadFile($file , $path)
     {
-        if(env('DEPLOYED')){
-            $file_name = uniqid() . '.' .$file->getClientOriginalExtension();
-            $image_path = 'uploads/'. $path .'/'. $file_name;
-            Storage::disk('ftp')->put($image_path, fopen($file, 'r+'));
-            $db_path = $path .'/'. $file_name;
-            return $db_path;
-        }else{
-            $file_path = public_path().'/uploads/'. $path;
-            File::ensureDirectoryExists($file_path);
-            $file_name = uniqid() . '.' .$file->getClientOriginalExtension();
-            $file->move($file_path , $file_name);
-            $db_path = $path .'/'. $file_name;
-            return $db_path;
-        }
+        $file_path = base_path().'/uploads/'. $path;
+        File::ensureDirectoryExists($file_path);
+        $file_name = uniqid() . '.' .$file->getClientOriginalExtension();
+        $file->move($file_path , $file_name);
+        $db_path = $path .'/'. $file_name;
+        return $db_path;
+
+        // $file_name = uniqid() . '.' .$file->getClientOriginalExtension();
+        // $image_path = 'uploads/'. $path .'/'. $file_name;
+        // Storage::disk('ftp')->put($image_path, fopen($file, 'r+'));
+        // $db_path = $path .'/'. $file_name;
+        // return $db_path;
     }
 
     public function uploadUserFileBase64($file , $path)
