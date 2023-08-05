@@ -78,7 +78,11 @@ class Controller extends BaseController
 
     public function uploadFile($file , $path)
     {
-        $file_path = base_path().'/uploads/'. $path;
+        if(env('DEPLOYED')){
+            $file_path = base_path().'/uploads/'. $path;
+        }else{
+            $file_path = public_path().'/uploads/'. $path;
+        }
         File::ensureDirectoryExists($file_path);
         $file_name = uniqid() . '.' .$file->getClientOriginalExtension();
         $file->move($file_path , $file_name);
@@ -103,12 +107,15 @@ class Controller extends BaseController
 
         $image_path = $path .'/'. $file_name;
         if(env('DEPLOYED')){
-            Storage::disk('ftp')->put('uploads/'.$image_path, fopen($file, 'r+'));
+            $file_path = base_path().'/uploads/'. $path;
         }else{
             $file_path = public_path().'/uploads/'. $path;
-            File::ensureDirectoryExists($file_path);
-            file_put_contents($file_path . '/' . $file_name, $image_base64);
         }
+        File::ensureDirectoryExists($file_path);
+        file_put_contents($file_path . '/' . $file_name, $image_base64);
+
+        // if upload using ftp
+        // Storage::disk('ftp')->put('uploads/'.$image_path, fopen($file, 'r+'));
 
         return $image_path;
     }

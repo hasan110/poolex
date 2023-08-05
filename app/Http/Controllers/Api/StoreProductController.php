@@ -310,6 +310,8 @@ class StoreProductController extends Controller
 
         $product = StoreProduct::where('id',$request->id)->where('user_id',$user->id)->first();
         $product['new_images'] = [];
+        $product['removed_images'] = [];
+        $product['new_images_description'] = [];
         $categories = $product->categories()->pluck('id')->toArray();
         $product['categories'] = count($categories) > 0 ? $categories[0] : null;
 
@@ -322,6 +324,7 @@ class StoreProductController extends Controller
 
         $validation = $this->validateData($request , [
             'images' => 'required|array',
+            'images_description' => 'array',
             'name' => 'required',
             'description' => 'required',
             'inventory' => 'required',
@@ -344,11 +347,12 @@ class StoreProductController extends Controller
 
         if($request->has('images'))
         {
-            foreach($request->images as $file)
+            foreach($request->images as $key => $file)
             {
                 $img = $this->uploadUserFileBase64($file , 'products/'.$store->id);
                 $item = [
                     'path'=>$img,
+                    'description'=> isset($request->images_description[$key]) ? $request->images_description[$key] : '',
                     'type'=>'image'
                 ];
                 $files[] = $item;
@@ -392,6 +396,7 @@ class StoreProductController extends Controller
         $validation = $this->validateData($request , [
             'id' => 'required',
             'new_images' => 'array',
+            'new_images_description' => 'array',
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
@@ -409,11 +414,12 @@ class StoreProductController extends Controller
         $files = $product->files;
         if($request->has('new_images'))
         {
-            foreach($request->new_images as $file)
+            foreach($request->new_images as $key => $file)
             {
                 $img = $this->uploadUserFileBase64($file , 'products/'.$product->store->id);
                 $item = [
                     'path'=>$img,
+                    'description'=> isset($request->new_images_description[$key]) ? $request->new_images_description[$key] : '',
                     'type'=>'image'
                 ];
                 $files[] = $item;
