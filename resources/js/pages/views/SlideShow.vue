@@ -112,7 +112,7 @@
           <div class="row mb-2">
             <div class="col-4 text-left">توضیحات :</div>
             <div class="col-8 text-right">
-              <textarea v-model="item.description" rows="10"></textarea>
+              <textarea v-model="item.description" rows="6" class="form-control"></textarea>
             </div>
           </div>
 
@@ -192,7 +192,7 @@
             <div class="row mb-2">
                 <div class="col-4 text-left">توضیحات :</div>
                 <div class="col-8 text-right">
-                    <textarea v-model="edit_item.description" rows="10"></textarea>
+                    <textarea v-model="edit_item.description" rows="6" class="form-control"></textarea>
                 </div>
             </div>
 
