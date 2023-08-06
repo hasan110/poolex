@@ -41,6 +41,7 @@ class SlideShowController extends Controller
             'uuid' => uniqid(),
             'internal_link' => $request->internal_link ? $request->internal_link : 0,
             'link_to' => $request->link_to,
+            'description' => $request->description,
             'type' => $type
         ]);
 
@@ -85,6 +86,7 @@ class SlideShowController extends Controller
         $item->update([
             'internal_link' => $request->internal_link ? $request->internal_link : 0,
             'link_to' => $request->link_to,
+            'description' => $request->description,
             'type' => $type
         ]);
 

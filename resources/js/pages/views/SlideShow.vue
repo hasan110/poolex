@@ -109,6 +109,13 @@
             </div>
           </div>
 
+          <div class="row mb-2">
+            <div class="col-4 text-left">توضیحات :</div>
+            <div class="col-8 text-right">
+              <textarea v-model="item.description" rows="10"></textarea>
+            </div>
+          </div>
+
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="Create">افزودن</button>
@@ -182,6 +189,13 @@
             </div>
           </div>
 
+            <div class="row mb-2">
+                <div class="col-4 text-left">توضیحات :</div>
+                <div class="col-8 text-right">
+                    <textarea v-model="edit_item.description" rows="10"></textarea>
+                </div>
+            </div>
+
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="editItem">ویرایش</button>
@@ -242,6 +256,7 @@ export default {
       d.link_to ? form.append('link_to', d.link_to) : ''
       d.internal_link ? form.append('internal_link',d.internal_link) : form.append('internal_link',0)
       d.type ? form.append('type', d.type) : ''
+      d.description ? form.append('description', d.description) : ''
       d.file ? form.append('file', d.file) : ''
 
       this.$axios.post(`slideshows/add` , form)
@@ -283,6 +298,7 @@ export default {
       d.id ? form.append('id', d.id) : ''
       d.link_to ? form.append('link_to', d.link_to) : ''
       d.type ? form.append('type', d.type) : ''
+      d.description ? form.append('description', d.description) : ''
       d.internal_link ? form.append('internal_link', d.internal_link) : form.append('internal_link', 0)
       d.new_file ? form.append('new_file', d.new_file) : ''
 

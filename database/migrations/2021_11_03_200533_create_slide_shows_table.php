@@ -23,6 +23,7 @@ class CreateSlideShowsTable extends Migration
             $table->string('file')->nullable();
             $table->string('type')->default('slideshow');
             $table->boolean('status')->default(1);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
