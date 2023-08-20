@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ebuyblog/.idea/ebuyblog.iml" filepath="$PROJECT_DIR$/../ebuyblog/.idea/ebuyblog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ebuyseller/.idea/ebuyseller.iml" filepath="$PROJECT_DIR$/../ebuyseller/.idea/ebuyseller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ebuyshop/.idea/ebuyshop.iml" filepath="$PROJECT_DIR$/../ebuyshop/.idea/ebuyshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../lyricfa/.idea/lyricfa.iml" filepath="$PROJECT_DIR$/../lyricfa/.idea/lyricfa.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/poolex.iml" filepath="$PROJECT_DIR$/.idea/poolex.iml" />
       <module fileurl="file://$PROJECT_DIR$/../poolex_web/.idea/poolex_web.iml" filepath="$PROJECT_DIR$/../poolex_web/.idea/poolex_web.iml" />
     </modules>

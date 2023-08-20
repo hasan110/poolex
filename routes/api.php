@@ -96,6 +96,11 @@ Route::namespace('App\Http\Controllers\Api')->group(function () {
 
     Route::get('/get_settings', 'SettingController@get_settings');
 
+    // BLOG ROUTES
+
+    Route::get('/get_blogs', 'BlogController@get_blogs');
+    Route::get('/get_blog/{id}', 'BlogController@get_blog');
+
     // STORE ROUTES
 
     Route::post('/seller/login' , 'AuthController@seller_login');

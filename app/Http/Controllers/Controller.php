@@ -122,11 +122,13 @@ class Controller extends BaseController
 
     public function deleteFile($path)
     {
-        if(env('DEPLOYED')){
-            Storage::disk('ftp')->delete('uploads/'.$path);
-        }else{
-            File::delete(public_path().'/uploads/'.$path);
-        }
+        File::delete(public_path().'/uploads/'.$path);
+
+        // if(env('DEPLOYED')){
+        //     Storage::disk('ftp')->delete('uploads/'.$path);
+        // }else{
+        // }
+
         return true;
     }
 

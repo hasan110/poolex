@@ -124,5 +124,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="poolex_web" />
+    <orderEntry type="module" module-name="ebuynuxt" />
+    <orderEntry type="module" module-name="ebuyshop" />
+    <orderEntry type="module" module-name="ebuyseller" />
+    <orderEntry type="module" module-name="lyricfa" />
+    <orderEntry type="module" module-name="ebuyblog" />
   </component>
 </module>

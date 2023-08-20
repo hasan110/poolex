@@ -89,7 +89,7 @@
                   <i class="fa fa-shopping-cart"></i>
                   <p>
                     مدیریت فروشگاه
-                    <i class="right fa fa-angle-left"></i>
+                    <i class="right fa fa-angle-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
@@ -110,6 +110,34 @@
                           <i class="fa fa-circle-o text-primary"></i>
                           <p>لیست سفارشات</p>
                       </router-link>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-item has-treeview" :class="[
+                this.$route.name == 'StoreProducts' ||
+                this.$route.name == 'Stores' ?
+                'menu-open' : '']"
+              >
+                <a href="#" class="nav-link" :class="[this.$route.name == 'Blogs' || this.$route.name == 'CreateBlog'|| this.$route.name == 'EditBlog' ? 'active' : '']">
+                  <i class="fa fa-shopping-cart"></i>
+                  <p>
+                    مدیریت بلاگ
+                    <i class="right fa fa-angle-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <router-link :to="{name:'Blogs'}" class="nav-link">
+                      <i class="fa fa-circle-o"></i>
+                      <p>لیست بلاگ ها</p>
+                    </router-link>
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{name:'CreateBlog'}" class="nav-link">
+                      <i class="fa fa-circle-o"></i>
+                      <p>ایجاد بلاگ</p>
+                    </router-link>
                   </li>
                 </ul>
               </li>
@@ -150,7 +178,7 @@
                   <i class="fa fa-ticket"></i>
                   <p>
                     پشتیبانی (تیکت ها)
-                    <i class="right fa fa-angle-left"></i>
+                    <i class="right fa fa-angle-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
@@ -199,7 +227,7 @@
                   <i class="fa fa-line-chart"></i>
                   <p>
                     مدیریت سایت
-                    <i class="right fa fa-angle-left"></i>
+                    <i class="right fa fa-angle-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
@@ -312,7 +340,7 @@
                   <i class="nav-icon fa fa-pie-chart"></i>
                   <p>
                     چارت‌ها
-                    <i class="right fa fa-angle-left"></i>
+                    <i class="right fa fa-angle-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">

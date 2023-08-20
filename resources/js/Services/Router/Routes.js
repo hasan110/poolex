@@ -13,6 +13,10 @@ import Admins from '../../pages/admin/Admins.vue';
 import Harvests from '../../pages/harvests/Harvests.vue';
 import Harvest from '../../pages/harvests/Harvest.vue';
 
+import Blogs from '../../pages/blogs/Blogs.vue';
+import CreateBlog from '../../pages/blogs/CreateBlog.vue';
+import EditBlog from '../../pages/blogs/EditBlog.vue';
+
 import Stores from '../../pages/stores/Stores.vue';
 import StoreProducts from '../../pages/stores/StoreProducts.vue';
 import Invoices from '../../pages/invoices/Invoices.vue';
@@ -56,6 +60,10 @@ const allUrl = [{
 
         { path: 'Harvests', name: 'Harvests', component: Harvests },
         { path: 'Harvest/:id', name: 'Harvest', component: Harvest },
+
+        { path: 'Blogs', name: 'Blogs', component: Blogs },
+        { path: 'CreateBlog', name: 'CreateBlog', component: CreateBlog },
+        { path: 'EditBlog/:id', name: 'EditBlog', component: EditBlog },
 
         { path: 'Stores', name: 'Stores', component: Stores },
         { path: 'StoreProducts', name: 'StoreProducts', component: StoreProducts },

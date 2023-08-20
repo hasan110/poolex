@@ -154,6 +154,14 @@ Route::namespace('App\Http\Controllers\Admin')->group(function () {
             Route::post('/ChangeStatus', 'StoreProductController@ChangeStatus')->name('ChangeStatusStoreProduct');
         });
 
+        Route::prefix('/blogs')->group(function () {
+            Route::post('/list', 'BlogController@list')->name('blogList');
+            Route::post('/add', 'BlogController@add')->name('addBlog');
+            Route::get('/blog/{id}', 'BlogController@get')->name('getBlog');
+            Route::post('/edit', 'BlogController@edit')->name('editBlog');
+            Route::post('/delete', 'BlogController@delete')->name('deleteBlog');
+        });
+
         Route::prefix('/invoices')->group(function () {
             Route::post('/list', 'InvoiceController@list')->name('invoicesList');
             Route::get('/invoice/{id}', 'InvoiceController@get')->name('getInvoice');

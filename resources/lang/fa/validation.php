@@ -217,6 +217,9 @@ return [
         "shipping_cost" => "هزینه ارسال",
         "shipping_time" => "مدت زمان ارسال",
         "postal_code" => "کد پستی",
+        "thumbnail" => "تصویر بند انگشتی",
+        "short_description" => "توضیح کوتاه",
+        "blog_content" => "متن مقاله",
     ],
 
 ];
