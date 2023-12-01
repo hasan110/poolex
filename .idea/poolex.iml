@@ -129,5 +129,6 @@
     <orderEntry type="module" module-name="ebuyseller" />
     <orderEntry type="module" module-name="lyricfa" />
     <orderEntry type="module" module-name="ebuyblog" />
+    <orderEntry type="module" module-name="new-lyricfa" />
   </component>
 </module>
